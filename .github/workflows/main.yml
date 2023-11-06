@@ -1,11 +1,12 @@
 name: CI
+
 on:
   pull_request:
     types: [ labeled ]
 jobs:
   build:
-    environment: TEST_ENV
     if: ${{ github.event.label.name == 'Build' }}
+    environment: TEST_ENV
     runs-on: ubuntu-latest
     steps:
       -
@@ -30,6 +31,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:latest     
   deploy:
       if: ${{ github.event.label.name == 'Deploy' }}
+      environment: TEST_ENV
       runs-on: ubuntu-latest
       steps:
         -
@@ -67,6 +69,6 @@ jobs:
 
         - name: Stop containers
           if: always()
-          run: docker-compose -f "./compose.yml" down
+          run: docker-compose -f "compose.yml" down
   
     
