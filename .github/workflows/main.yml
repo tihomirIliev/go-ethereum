@@ -36,8 +36,9 @@ jobs:
           name: Checkout
           uses: actions/checkout@v4
           
-        - uses: adrielcodeco/docker-compose-run-action@v1
+        - uses: isbang/compose-action@v1.5.1
           with:
+            up-flags: -d
             compose-file: './compose.yaml'
             service: devnet
 
