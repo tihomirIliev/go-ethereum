@@ -77,7 +77,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           registry: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum
           image: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
-          options: -dit --name test_container
+          id: test_container
+          options: -dit
       
       - name: Installing Nodejs packages
         uses: actions/setup-node@v3
