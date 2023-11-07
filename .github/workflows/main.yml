@@ -77,7 +77,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           registry: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum
           image: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
-          id: test_container
           options: -dit
       
       - name: Installing Nodejs packages
@@ -104,7 +103,7 @@ jobs:
           rpc_url: ${{ secrets.RPC_URL }}
       
       - name: Check runnig containers
-        run: docker ps
+        run: docker ps 
       - name: Stop containers
         if: '!cancelled()'
-        run: docker stop $(docker ps | grep test_container | awk '{print $1}')
+        run: docker stop $(docker ps -q)
