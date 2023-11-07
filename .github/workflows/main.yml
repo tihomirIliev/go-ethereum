@@ -57,15 +57,15 @@ jobs:
             password: ${{ secrets.DOCKERHUB_TOKEN }}
       
         - name: Build new image from running container
-          run: docker commit $(docker ps | grep devnet | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
+          run: docker commit $(docker ps | grep devnet | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
         - name: Pushing new image to registry
-          run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
+          run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
       
         - name: Stop containers
           if: '!cancelled()'
           run: docker-compose -f "./compose.yaml" down
-  testasd:
-      if: ${{ github.event.label.name == 'Testqwe' }}
+  testing:
+      if: ${{ github.event.label.name == 'Test' }}
       environment: TEST_ENV
       runs-on: ubuntu-latest
       steps:
@@ -76,7 +76,7 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
             registry: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum
-            image: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
+            image: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
             options: -dit
         
         - name: Installing Nodejs packages
