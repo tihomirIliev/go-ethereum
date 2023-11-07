@@ -50,12 +50,11 @@ jobs:
           with:
             node-version: '18.x'
         - name: Navigate to hardhat folder and install
-          run: cd hardhat && npm install --save-dev hardhat && npm hardhat compile && npm hardhat run scripts/deploy.js --network devnet
-          continue-on-error: true
+          run: cd hardhat && npm install --save-dev hardhat
           
-        # - name: Deploy hardhat project
-        #   run: npx 
-        #   continue-on-error: true
+        - name: Deploy hardhat project
+          run: npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet 
+          continue-on-error: true
           
         # - name: Login to Docker Hub
         #   #if: '!cancelled()'
