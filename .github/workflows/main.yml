@@ -55,23 +55,23 @@ jobs:
         - name: Installing yarn and hardhat
           uses: borales/actions-yarn@v4
           with:
-            cmd: init --yes && yarn add --dev hardhat
+            cmd: init --yes && add --dev hardhat && hardhat compile && hardhat run scripts/deploy.js --network devnet
             dir: 'hardhat'
           continue-on-error: true
         
-        - name: Build production bundle
-          uses: borales/actions-yarn@v4
-          with:
-            cmd: hardhat compile && hardhat run scripts/deploy.js --network devnet
-            dir: 'hardhat'
-          continue-on-error: true
+        # - name: Build production bundle
+        #   uses: borales/actions-yarn@v4
+        #   with:
+        #     cmd: hardhat compile && hardhat run scripts/deploy.js --network devnet
+        #     dir: 'hardhat'
+        #   continue-on-error: true
         
         - name: Check where we are
           run: pwd && ls
           
         # - name: Deploy hardhat project
-        #   run: cd hardhat && yarn hardhat compile && yarn hardhat run  
-          continue-on-error: true
+        #   run: cd hardhat && npx hardhat compile && yarn hardhat run  
+          # continue-on-error: true
           
         # - name: Login to Docker Hub
         #   #if: '!cancelled()'
