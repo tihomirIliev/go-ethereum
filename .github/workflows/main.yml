@@ -50,7 +50,7 @@ jobs:
           with:
             node-version: '18.x'
         - name: Navigate to hardhat folder and deploy
-          run: pwd
+          run: pwd && ls
         #  run: cd /hardhat && npx hardhat run scripts/deploy.js --network devnet
         # - name: Deploy hardhat project
         #   run: npx hardhat run ./hardhat/scripts/deploy.js --network devnet
