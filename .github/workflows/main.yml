@@ -49,10 +49,12 @@ jobs:
           uses: actions/setup-node@v3
           with:
             node-version: '18.x'
-        - name: Navigate to hardhat folder and deploy
-          run: cd hardhat && npx hardhat run scripts/deploy.js --network devnet
-        # - name: Deploy hardhat project
-        #   run: npx hardhat run ./hardhat/scripts/deploy.js --network devnet
+        - name: Navigate to hardhat folder and install
+          run: cd hardhat && npm install --save-dev hardhat
+          continue-on-error: true
+          
+        - name: Deploy hardhat project
+          run: npm hardhat compile && npm run hardhat/scripts/deploy.js --network devnet
           continue-on-error: true
           
         # - name: Login to Docker Hub
