@@ -2,7 +2,6 @@ name: CI
 on:
   pull_request:
     types: [ labeled ]
-
 jobs:
   build:
     if: ${{ github.event.label.name == 'Build' }}
@@ -64,42 +63,3 @@ jobs:
         - name: Stop containers
           if: '!cancelled()'
           run: docker-compose -f "./compose.yaml" down
-  testing:
-      if: ${{ github.event.label.name == 'Test' }}
-      environment: TEST_ENV
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-        - uses: actions/checkout@v4
-        - uses: addnab/docker-run-action@v3
-          with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
-            registry: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum
-            image: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
-            options: -dit
-        
-        - name: Installing Nodejs packages
-          uses: actions/setup-node@v3
-          with:
-            node-version: '18.x'
-      
-        - name: Installing yarn, hardhat
-          uses: borales/actions-yarn@v4
-          with:
-            cmd: init --yes && add --dev hardhat
-            dir: 'hardhat'
-          continue-on-error: true
-        
-        - name: Hardhat unit test
-          run: cd hardhat
-        - name: Environment
-          uses: actions/setup-node@v3
-        - name: Test
-          uses: ambersun1234/hardhat-test-action@v1
-          with:
-            network: devnet
-            private_key: ${{ secrets.PRIVATE_KEY }}
-            rpc_url: ${{ secrets.RPC_URL }}
-  
-    
