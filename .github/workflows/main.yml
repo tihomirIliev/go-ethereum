@@ -71,13 +71,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: addnab/docker-run-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          registry: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum
-          image: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
-          options: -dit
+      
+      - name: Running devnet/hardhat image  
+        run: docker run -dit ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
       
       - name: Installing Nodejs packages
         uses: actions/setup-node@v3
