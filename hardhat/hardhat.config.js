@@ -10,7 +10,7 @@ module.exports = {
                   hardhat: {
                             },
                   devnet: {
-                          url: "http://localhost:9999",
+                          url: "http://127.0.0.1:8545",
                               accounts: [privatekey]
                             }
         },

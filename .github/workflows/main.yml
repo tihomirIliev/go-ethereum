@@ -9,20 +9,17 @@ jobs:
     environment: TEST_ENV
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      -
-        name: Build and push
+      
+      - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -34,63 +31,55 @@ jobs:
       environment: TEST_ENV
       runs-on: ubuntu-latest
       steps:
-        -
-          name: Checkout
+        - name: Checkout
           uses: actions/checkout@v4
-          
         - uses: isbang/compose-action@v1.5.1
           with:
             up-flags: -d
             compose-file: './compose.yaml'
             services: devnet
-         
-         # Installing NPM packages and running test
         - name: Installing Nodejs packages
           uses: actions/setup-node@v3
           with:
             node-version: '18.x'
-        # - name: Navigate to hardhat folder and install
-        #   run: cd hardhat && yarn init --yes && yarn add --dev hardhat
-          
-        - name: Installing yarn and hardhat
+      
+        - name: Installing yarn, hardhat and deploy contract
           uses: borales/actions-yarn@v4
           with:
             cmd: init --yes && add --dev hardhat && hardhat compile && hardhat run scripts/deploy.js --network devnet
             dir: 'hardhat'
           continue-on-error: true
-        
-        # - name: Build production bundle
-        #   uses: borales/actions-yarn@v4
-        #   with:
-        #     cmd: hardhat compile && hardhat run scripts/deploy.js --network devnet
-        #     dir: 'hardhat'
-        #   continue-on-error: true
-        
-        - name: Check where we are
-          run: pwd && ls
-          
-        # - name: Deploy hardhat project
-        #   run: cd hardhat && npx hardhat compile && yarn hardhat run  
-          # continue-on-error: true
-          
-        # - name: Login to Docker Hub
-        #   #if: '!cancelled()'
-        #   uses: docker/login-action@v3
-        #   with:
-        #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-        #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-        # -
-        #   name: Build new image from running container
-        #   run: docker commit $(docker ps | grep devnet | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
-        # -  
-        #   name: Pushing new image to registry
-        #   run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
 
-        # - name: Run Tests
-        #   run: npx hardhat test
-
+        - name: Login to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+        - name: Build new image from running container
+          run: docker commit $(docker ps | grep devnet | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
+        - name: Pushing new image to registry
+          run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
+      
         - name: Stop containers
           if: '!cancelled()'
           run: docker-compose -f "./compose.yaml" down
-  
+  test:
+    environment: TEST_ENV
+    runs-on: ubuntu-latest
+    name: Hardhat unit test
+    steps:
+    - name: Navigate to hardhat folder
+      run: cd hardhat
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Environment
+      uses: actions/setup-node@v3
+    - name: Test
+      uses: ambersun1234/hardhat-test-action@v1
+      with:
+        network: devnet
+        private_key: ${{ secrets.PRIVATE_KEY }}
+        rpc_url: ${{ secrets.RPC_URL }}
+    
     
