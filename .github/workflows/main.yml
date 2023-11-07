@@ -101,7 +101,9 @@ jobs:
           network: devnet
           private_key: ${{ secrets.PRIVATE_KEY }}
           rpc_url: ${{ secrets.RPC_URL }}
-
+      
+      - name: Check runnig containers
+        run: docker ps
       - name: Stop containers
         if: '!cancelled()'
         run: docker stop $(docker ps | grep test_container | awk '{print $1}')
