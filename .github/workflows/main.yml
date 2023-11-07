@@ -49,8 +49,10 @@ jobs:
           uses: actions/setup-node@v3
           with:
             node-version: '18.x'
-        - name: Deploy hardhat project
-          run: npx hardhat run ./hardhat/scripts/deploy.js --network devnet
+        - name: Navigate to hardhat folder and deploy
+          run: cd /hardhat && npx hardhat run scripts/deploy.js --network devnet
+        # - name: Deploy hardhat project
+        #   run: npx hardhat run ./hardhat/scripts/deploy.js --network devnet
           continue-on-error: true
           
         - name: Login to Docker Hub
@@ -63,14 +65,9 @@ jobs:
           name: Build new image from running container
           run: docker commit $(docker ps | grep devnet | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
         -  
-          name: Check if we build the correct image
-          run: echo $(docker ps | grep devnet | awk '{print $1}')
-          
-        -  
           name: Pushing new image to registry
           run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
-        
-       
+
         - name: Run Tests
           run: npx hardhat test
 
