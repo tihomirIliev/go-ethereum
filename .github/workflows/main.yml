@@ -4,8 +4,8 @@ on:
     types: [ labeled ]
 
 jobs:
-  testing:
-    if: ${{ github.event.label.name == 'Test' }}
+  deploy:
+    if: ${{ github.event.label.name == 'Deploy' }}
     environment: TEST_ENV
     runs-on: ubuntu-latest
     steps:
