@@ -64,8 +64,8 @@ jobs:
         - name: Stop containers
           if: '!cancelled()'
           run: docker-compose -f "./compose.yaml" down
-  test:
-      if: ${{ github.event.label.name == 'Test' }}
+  testasd:
+      if: ${{ github.event.label.name == 'Testqwe' }}
       environment: TEST_ENV
       runs-on: ubuntu-latest
       steps:
