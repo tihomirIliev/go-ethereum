@@ -64,7 +64,7 @@ jobs:
           if: '!cancelled()'
           run: docker-compose -f "./compose.yaml" down
   test:
-      if: ${{ github.event.label.name == 'bug' }}
+      if: ${{ github.event.label.name == 'Test' }}
       environment: TEST_ENV
       runs-on: ubuntu-latest
       steps:
@@ -76,7 +76,7 @@ jobs:
             password: ${{ secrets.DOCKERHUB_TOKEN }}
             registry: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum
             image: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_deployed
-            options: -d
+            options: -dit
         
         - name: Installing Nodejs packages
           uses: actions/setup-node@v3
