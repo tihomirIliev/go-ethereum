@@ -64,6 +64,7 @@ jobs:
           if: '!cancelled()'
           run: docker-compose -f "./compose.yaml" down
   test:
+      if: ${{ github.event.label.name == 'bug' }}
       environment: TEST_ENV
       runs-on: ubuntu-latest
       steps:
