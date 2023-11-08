@@ -48,7 +48,7 @@ jobs:
         shell: bash
       - name: Create local node and deploy
         run: |
-          yarn add --dev
+          yarn add --dev hardhat
           yarn hardhat compile &
           yarn hardhat run scripts/deploy.js --network devnet
       - name: Run Tests
