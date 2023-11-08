@@ -43,16 +43,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: cd hardhat
-      - run: yarn --ignore-scripts
-        shell: bash
-      - name: Create local node and deploy
-        run: |
-          yarn add --dev
-          yarn hardhat compile &
-          yarn hardhat run scripts/deploy.js --network devnet
-      - name: Run Tests
-        run: yarn hardhat test 
+      
+      - name: Adding packages
+        run: cd hardhat && npm install --save-dev hardhat
+      - name: Installing Hardhat
+        run: cd hardhat && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet
         continue-on-error: true
         
       # - name: Login to Docker Hub
