@@ -43,12 +43,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+      - run: yarn --ignore-scripts
+        shell: bash    
       - name: Installing Hardhat
         run: |
-          cd hardhat &
-          npm install --save-dev hardhat &
-          npx hardhat compile &
-          npx hardhat run scripts/deploy.js --network devnet
+          cd hardhat
+          yarn add --dev hardhat &
+          npm install --save-dev "@nomicfoundation/hardhat-network-helpers@^1.0.0" "@nomicfoundation/hardhat-chai-matchers@^2.0.0" "@nomicfoundation/hardhat-ethers@^3.0.0" "@nomicfoundation/hardhat-verify@^1.0.0" "@types/chai@^4.2.0" "@types/mocha@>=9.1.0" "@typechain/ethers-v6@^0.4.0" "@typechain/hardhat@^8.0.0" "chai@^4.2.0" "hardhat-gas-reporter@^1.0.8" "solidity-coverage@^0.8.1" "ts-node@>=8.0.0" "typechain@^8.2.0" "typescript@>=4.5.0" &
+          yarn hardhat compile &
+          yarn hardhat run scripts/deploy.js --network devnet
       - name: Run Tests
         run: npx hardhat test 
         continue-on-error: true
