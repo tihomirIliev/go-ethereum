@@ -86,7 +86,9 @@ jobs:
           cmd: init --yes && add --dev hardhat
           dir: 'hardhat'
         continue-on-error: true
-      
+
+      - name: Check if devnet is running
+        run: docker ps
       - name: Hardhat unit test
         run: cd hardhat
       - name: Environment
