@@ -43,9 +43,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-
       - name: Navigating to Hardhat folder
-        run: cd hardhat
+        run: cd hardhat && pwd && ls
       - name: Installing Hardhat
         run: yarn init --yes && yarn add --dev hardhat
       - name: Adding packages
