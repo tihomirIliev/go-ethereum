@@ -43,13 +43,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-
-      - name: Navigating to Hardhat folder
-        run: cd hardhat
+      
       - name: Adding packages
-        run: npm install --save-dev hardhat
+        run: cd hardhat && npm install --save-dev hardhat
       - name: Installing Hardhat
-        run: pwd && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet
+        run: cd hardhat && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet
         continue-on-error: true
         
       # - name: Login to Docker Hub
