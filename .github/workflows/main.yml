@@ -85,7 +85,9 @@ jobs:
       - name: Installing Hardhat
         run: cd hardhat && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet
         continue-on-error: true
-      
+
+      - name: Check if devnet is running
+        run: docker ps
       - name: Hardhat unit test
         run: cd hardhat
       - name: Environment
