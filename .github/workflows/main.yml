@@ -43,11 +43,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: cd hardhat
       - run: yarn --ignore-scripts
-        shell: bash
       - name: Create local node and deploy
         run: |
+          cd hardhat
           yarn add --dev hardhat
           yarn hardhat compile &
           yarn hardhat run scripts/deploy.js --network devnet
