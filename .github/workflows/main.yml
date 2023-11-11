@@ -36,7 +36,7 @@ jobs:
       - uses: isbang/compose-action@v1.5.1
         with:
           up-flags: -d
-          compose-file: './compose.yaml'
+          compose-file: './docker-compose.yaml'
           services: devnet
       
       - name: Installing Nodejs packages
@@ -47,7 +47,7 @@ jobs:
       - name: Adding packages
         run: cd hardhat && npm install --save-dev hardhat
       - name: Installing Hardhat
-        run: cd hardhat && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet
+        run: cd hardhat && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet2
         continue-on-error: true
         
       - name: Login to Docker Hub
