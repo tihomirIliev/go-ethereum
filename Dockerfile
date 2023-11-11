@@ -22,6 +22,26 @@ FROM alpine:latest
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /go-ethereum/build/bin/geth /usr/local/bin/
 
+COPY gethaccounts tmp/gethaccounts
+
+#ENV ACCOUNT_PASSWORD=""
+#ENV ACCOUNT_KEY=""
+#ENV bootnodeAddress=""
+#ENV address=""
+
+#RUN echo $ACCOUNT_PASSWORD > /tmp/password
+#RUN echo $ACCOUNT_KEY > /tmp/accountkey
+
+#RUN if [[ "$isnotbootnode" = yes ]]; then \
+#	geth account import --password tmp/password tmp/accountkey; \ 
+#	CMD exec geth --bootnodes "$bootnodeAddress" --networkid 3636 --verbosity 6 --http --http.addr "0.0.0.0" --http.corsdomain "*" --mine --etherbase $address --unlock $address --password tmp/password; \ 
+#    fi
+
+RUN geth init /tmp/gethaccounts/genesis.json \
+	&& rm -f ~/.ethereum/geth/nodekey
+#	&& geth account import --password tmp/gethaccounts/node1/password tmp/gethaccounts/node1/keystore \
+#	&& geth account import --password tmp/gethaccounts/node2/password tmp/gethaccounts/node2/keystore
+
 EXPOSE 8545 8546 30303 30303/udp
 ENTRYPOINT ["geth"]
 
