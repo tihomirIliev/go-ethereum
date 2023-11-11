@@ -1,8 +1,0 @@
-version: "3.7"
-services:
-  devnet:
-    hostname: devnet
-    image: tishodevopsa/go-ethereum:latest
-    container_name: devnet
-    ports:
-      - 8545:8545

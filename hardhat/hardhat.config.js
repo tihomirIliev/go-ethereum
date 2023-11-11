@@ -1,17 +1,15 @@
-require("@nomicfoundation/hardhat-toolbox");
+//require("@nomicfoundation/hardhat-toolbox");
+require("@nomicfoundation/hardhat-ethers");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 
-const privatekey = "fe18b0c7d7fa87a0ba135a8163571bc87dd24c2e49a8b609bd87cdff975c37e2";
-
 module.exports = {
-        defaultNetwork: "localhost",
+        //defaultNetwork: "localhost",
         networks: {
-                  hardhat: {
-                            },
-                  devnet: {
+                  devnet2: {
                           url: "http://127.0.0.1:8545",
-                              accounts: [privatekey]
+			      //accounts: [privatekey2],
+                              chainId: 9999
                             }
         },
         solidity: {
@@ -23,6 +21,5 @@ module.exports = {
                                           }
                             }
         },
-        timeout: 40000,
-        from: "0x7B8dDEfAE4BC81820Ac38DECa9Bd0D09597b83b9"
+        timeout: 40000
 };
