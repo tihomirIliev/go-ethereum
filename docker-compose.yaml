@@ -3,6 +3,7 @@ services:
   geth-bootnode:
     hostname: geth-bootnode
     image: devnet-img:latest
+    container_name: geth-bootnode
     command:
       --nodekeyhex="a9008d8f6644247cd064c1856c241115bcf6aaedca2af71d4537626864025220"
       --networkid="9999"
