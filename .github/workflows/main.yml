@@ -31,7 +31,7 @@ jobs:
     environment: TEST_ENV
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Starting devnet
         uses: actions/checkout@v4
       - uses: isbang/compose-action@v1.5.1
         with:
@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: '18.x'
       
-      - name: Adding packages
+      - name: Deploying Smart Contract
         run: cd hardhat && npm install --save-dev hardhat
       - name: Installing Hardhat
         run: cd hardhat && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet2
