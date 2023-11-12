@@ -8,7 +8,7 @@ services:
       --networkid="9999"
       --nodiscover
       --ipcdisable
-      --netrestrict="121.0.0.1/8"
+      --netrestrict="172.16.254.0/28"
     ports:
       - 30310:30310/udp
     networks:
@@ -35,6 +35,8 @@ services:
       --password=tmp/gethaccounts/node1/password --keystore=tmp/gethaccounts/node1/keystore
     ports:
       - 8545:8545
+    volumes:
+      - eth-data-1:/root/.ethash
     networks:
       priv-eth-net:
   geth-node2:
@@ -57,6 +59,8 @@ services:
       --password=tmp/gethaccounts/node2/password --keystore=tmp/gethaccounts/node2/keystore
     ports:
       - 8546:8545
+    volumes:
+      - eth-data-2:/root/.ethash
     networks:
       priv-eth-net:
 networks:
@@ -64,4 +68,7 @@ networks:
     driver: bridge
     ipam:
       config:
-      - subnet: 121.0.0.1/8
+      - subnet: 172.16.254.0/28
+volumes:
+  eth-data-1:
+  eth-data-2:

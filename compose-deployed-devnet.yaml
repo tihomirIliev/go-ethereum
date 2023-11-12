@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  geth-bootnode:
+    hostname: geth-bootnode
+    image: devnet-contracts:latest
+    container_name: geth-bootnode
+    ports:
+      - 30310:30310/udp
+  geth-node1:
+    hostname: geth-node1
+    image: devnet-contracts:latest
+    depends_on:
+      - geth-bootnode
+    container_name: geth-node1
+    ports:
+      - 8545:8545
+    volumes:
+      - eth-data-1:/root/.ethash
+  geth-node2:
+    hostname: geth-node2
+    image: devnet-contracts:latest
+    depends_on:
+      - geth-bootnode
+    container_name: geth-node2
+    ports:
+      - 8546:8545
+    volumes:
+      - eth-data-2:/root/.ethash
