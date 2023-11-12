@@ -2,7 +2,7 @@ version: '3.7'
 services:
   geth-bootnode:
     hostname: geth-bootnode
-    image: tishodevops/go-ethereum:devnet-hardhat_bootnode:latest
+    image: tishodevops/go-ethereum:devnet-hardhat_bootnode
     container_name: geth-bootnode
     ports:
       - 30310:30310/udp
@@ -10,7 +10,7 @@ services:
       priv-eth-net:      
   geth-node1:
     hostname: geth-node1
-    image: tishodevops/go-ethereum:devnet-hardhat_node1:latest
+    image: tishodevops/go-ethereum:devnet-hardhat_node1
     depends_on:
       - geth-bootnode
     container_name: geth-node1
@@ -22,7 +22,7 @@ services:
       priv-eth-net:  
   geth-node2:
     hostname: geth-node2
-    image: tishodevops/go-ethereum:devnet-hardhat_node2:latest
+    image: tishodevops/go-ethereum:devnet-hardhat_node2
     depends_on:
       - geth-bootnode
     container_name: geth-node2
