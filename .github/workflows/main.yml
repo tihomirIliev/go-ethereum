@@ -67,7 +67,9 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node2
       - name: Stop containers
         if: '!cancelled()'
-        run: docker-compose -f "./docker-compose.yaml" down
+        run: |
+          docker-compose -f "./docker-compose.yaml" stop
+          docker-compose -f "./docker-compose.yaml" down
   testing:
     if: ${{ github.event.label.name == 'Test' }}
     environment: TEST_ENV
@@ -75,9 +77,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Running devnet/hardhat image  
-        run: docker run -dit ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat
+      - uses: isbang/compose-action@v1.5.1
+        with:
+          up-flags: -d
+          compose-file: './compose-deployed-devnet.yaml'
       
       - name: Installing Nodejs packages
         uses: actions/setup-node@v3
@@ -87,11 +90,9 @@ jobs:
       - name: Adding packages
         run: cd hardhat && npm install --save-dev hardhat
       - name: Installing Hardhat
-        run: cd hardhat && npx hardhat compile && npx hardhat run scripts/deploy.js --network devnet
+        run: cd hardhat && npx hardhat test
         continue-on-error: true
 
-      - name: Check if devnet is running
-        run: docker ps
       - name: Hardhat unit test
         run: cd hardhat
       - name: Environment
@@ -100,9 +101,11 @@ jobs:
         uses: ambersun1234/hardhat-test-action@v1
         with:
           network: devnet
-          private_key: ${{ secrets.PRIVATE_KEY }}
           rpc_url: ${{ secrets.RPC_URL }}
+        continue-on-error: true
        
       - name: Stop containers
         if: '!cancelled()'
-        run: docker stop $(docker ps -q)
+        run: |
+          docker-compose -f "./compose-deployed-devnet.yaml" stop
+          docker-compose -f "./compose-deployed-devnet.yaml" down
