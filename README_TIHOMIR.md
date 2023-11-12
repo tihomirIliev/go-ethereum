@@ -9,5 +9,5 @@ Note: The actions in Steps Deploy and Test are examples.<br> Upon running the de
 Simple terraform script is set to create **AKS cluster** and deploy the **devnet_hardhat** image to it along with one service.<br> SSH and RBAC parts of the setup are skipped.<br>First log in to Azure by executing **az login**. <br>The synchronizing to Azure information is skipped in terraform, as terraform will assume it from **az login** (This will be depricated in the future)<br><br>  
 Navigate to terraform folder and execute **terraform init -> terraform plan -> terraform apply** commands. After completion **kubeconfig** file will be created. It can be used to interact with the cluster with **kubectl** (kubectl have to be instailled on the machine). 
 <br><br>Increment the Counter value by one to simulate change so pull request can be available.<br><br>
-Counter 1
+Counter 2
 
