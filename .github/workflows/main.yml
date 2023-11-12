@@ -25,7 +25,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet-img
   deploy:
     if: ${{ github.event.label.name == 'Deploy' }}
     environment: TEST_ENV
@@ -37,7 +37,6 @@ jobs:
         with:
           up-flags: -d
           compose-file: './docker-compose.yaml'
-          services: devnet
       
       - name: Installing Nodejs packages
         uses: actions/setup-node@v3

@@ -2,7 +2,7 @@ version: '3.7'
 services:
   geth-bootnode:
     hostname: geth-bootnode
-    image: devnet-img:latest
+    image: tishodevopsa/go-ethereum:devnet-img
     container_name: geth-bootnode
     command:
       --nodekeyhex="a9008d8f6644247cd064c1856c241115bcf6aaedca2af71d4537626864025220"
@@ -18,7 +18,7 @@ services:
     hostname: geth-node1
     env_file:
       - .env
-    image: devnet-img:latest
+    image: tishodevopsa/go-ethereum:devnet-img
     depends_on:
       - geth-bootnode
     container_name: geth-node1
@@ -42,7 +42,7 @@ services:
       priv-eth-net:
   geth-node2:
     hostname: geth-node2
-    image: devnet-img:latest
+    image: tishodevopsa/go-ethereum:devnet-img
     depends_on:
       - geth-bootnode
     container_name: geth-node2
