@@ -37,7 +37,6 @@ jobs:
         with:
           up-flags: -d
           compose-file: './docker-compose.yaml'
-          services: devnet
       
       - name: Installing Nodejs packages
         uses: actions/setup-node@v3
