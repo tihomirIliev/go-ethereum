@@ -56,13 +56,15 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
     
       - name: Build new image from running container
-        run: docker commit $(docker ps | grep geth-bootnode | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_bootnode \
-             docker commit $(docker ps | grep geth-node1 | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node1 \
-             docker commit $(docker ps | grep geth-node2 | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node2
+        run: |
+          docker commit $(docker ps | grep geth-bootnode | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_bootnode
+          docker commit $(docker ps | grep geth-node1 | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node1
+          docker commit $(docker ps | grep geth-node2 | awk '{print $1}') ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node2
       - name: Pushing new image to registry
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_bootnode \
-             docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node1 \
-             docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node2
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_bootnode
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node1
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/go-ethereum:devnet_hardhat_node2
       - name: Stop containers
         if: '!cancelled()'
         run: docker-compose -f "./docker-compose.yaml" down
