@@ -93,16 +93,16 @@ jobs:
         run: cd hardhat && npx hardhat test
         continue-on-error: true
 
-      - name: Hardhat unit test
-        run: cd hardhat
-      - name: Environment
-        uses: actions/setup-node@v3
-      - name: Test
-        uses: ambersun1234/hardhat-test-action@v1
-        with:
-          network: devnet
-          rpc_url: ${{ secrets.RPC_URL }}
-        continue-on-error: true
+      # - name: Hardhat unit test
+      #   run: cd hardhat
+      # - name: Environment
+      #   uses: actions/setup-node@v3
+      # - name: Test
+      #   uses: ambersun1234/hardhat-test-action@v1
+      #   with:
+      #     network: devnet
+      #     rpc_url: ${{ secrets.RPC_URL }}
+      #   continue-on-error: true
        
       - name: Stop containers
         if: '!cancelled()'
