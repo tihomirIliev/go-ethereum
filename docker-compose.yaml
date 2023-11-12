@@ -36,8 +36,8 @@ services:
       --password=tmp/gethaccounts/node1/password --keystore=tmp/gethaccounts/node1/keystore
     ports:
       - 8545:8545
-    volumes:
-      - eth-data-1:/root/.ethash
+    # volumes:
+    #   - eth-data-1:/root/.ethash
     networks:
       priv-eth-net:
   geth-node2:
@@ -60,8 +60,8 @@ services:
       --password=tmp/gethaccounts/node2/password --keystore=tmp/gethaccounts/node2/keystore
     ports:
       - 8546:8545
-    volumes:
-      - eth-data-2:/root/.ethash
+    # volumes:
+    #   - eth-data-2:/root/.ethash
     networks:
       priv-eth-net:
 networks:
@@ -70,6 +70,6 @@ networks:
     ipam:
       config:
       - subnet: 172.16.254.0/28
-volumes:
-  eth-data-1:
-  eth-data-2:
+# volumes:
+#   eth-data-1:
+#   eth-data-2:
