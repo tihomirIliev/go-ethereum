@@ -6,6 +6,8 @@ services:
     container_name: geth-bootnode
     ports:
       - 30310:30310/udp
+    networks:
+      priv-eth-net:      
   geth-node1:
     hostname: geth-node1
     image: tishodevops/go-ethereum:devnet-hardhat_node1:latest
@@ -16,6 +18,8 @@ services:
       - 8545:8545
     volumes:
       - eth-data-1:/root/.ethash
+    networks:
+      priv-eth-net:  
   geth-node2:
     hostname: geth-node2
     image: tishodevops/go-ethereum:devnet-hardhat_node2:latest
@@ -26,3 +30,11 @@ services:
       - 8546:8545
     volumes:
       - eth-data-2:/root/.ethash
+    networks:
+      priv-eth-net:
+networks:
+  priv-eth-net:
+    driver: bridge
+volumes:
+  eth-data-1:
+  eth-data-2:
