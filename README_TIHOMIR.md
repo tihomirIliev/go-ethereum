@@ -1,7 +1,7 @@
 Workflow labels are created - **Build, Test, Deploy**. On Pull request from **tihomirIliev-patch-1** to **master** branch with label selected the following actions are triggered:<br><br>
 **Build** - Docker image is build from the Dockerfile and pushed to Docker Hub.<br><br>
 **Test** - The image with tag devnet_hardhat is runned and hardhat tests are triggered on it.<br><br>
-**Deploy** - Docker compose is used to run the image created in Build step. Test smart contract is deployed on the devnet2. New images from the running containers are build with corresponding tags<br><br>
+**Deploy** - Docker compose is used to run the image created in Build step. Test smart contract is deployed on the devnet2. New images from the running containers are build with corresponding tags<br>
 
 Note: After the deployment of the contract three images are created instead of one.<br><br>
 **Deployment to Azure**<br>
